@@ -1,0 +1,45 @@
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+*.swp
+*.bak
+*~
+.DS_Store
+
+# Environment variables
+.env
+.flaskenv
+
+# Database files
+*.sqlite3
+*.db
+test_db.db
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Logs
+*.log
+
+# Uploaded media/user-generated content (if applicable)
+media/
+uploads/
+
+# Test reports
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Other temporary files
+*.tmp
