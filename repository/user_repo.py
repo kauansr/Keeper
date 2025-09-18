@@ -1,11 +1,11 @@
 from sqlalchemy.orm import Session
-from models.user import User
-from schemas.user import UserCreate, UserUpdate
+from models.user import Product
+from schemas.user import ProductCreate, ProductUpdate
 from core.security.hashing import hash_password
 from typing import Optional, List
 
 
-class UserRepo:
+class ProductRepo:
     """
     User repository that provides many functions connecting with database
     """
@@ -13,7 +13,7 @@ class UserRepo:
     def __init__(self, db: Session):
         self.db = db
 
-    def get_user_by_id(self, user_id: int) -> Optional[User]:
+    def get_user_by_id(self, user_id: int) -> Optional[Product]:
         """
         get users by id inside the database returning the user
 
@@ -23,9 +23,9 @@ class UserRepo:
         return:
         - User
         """
-        return self.db.query(User).filter(User.id == user_id).first()
+        return self.db.query(Product).filter(Product.id == user_id).first()
 
-    def get_user_by_email(self, email: str) -> Optional[User]:
+    def get_user_by_email(self, email: str) -> Optional[Product]:
         """
         get user by email inside the database retuning the user
 
@@ -35,9 +35,9 @@ class UserRepo:
         return:
         - User
         """
-        return self.db.query(User).filter(User.email == email).first()
+        return self.db.query(Product).filter(Product.email == email).first()
 
-    def get_user_by_username(self, username: str) -> Optional[User]:
+    def get_user_by_username(self, username: str) -> Optional[Product]:
         """
         get user by username inside the database retuning the user
 
@@ -47,9 +47,9 @@ class UserRepo:
         return:
         - User
         """
-        return self.db.query(User).filter(User.name == username).first()
+        return self.db.query(Product).filter(Product.name == username).first()
 
-    def create_user(self, user_data: UserCreate) -> User:
+    def create_user(self, user_data: ProductCreate) -> Product:
         """
         Create an account for the user returning the User
 
@@ -60,7 +60,7 @@ class UserRepo:
         - User
         """
         hashed_pwd = hash_password(user_data.password)
-        new_user = User(
+        new_user = Product(
             name=user_data.name, email=user_data.email, hashed_password=hashed_pwd
         )
         self.db.add(new_user)
@@ -68,7 +68,7 @@ class UserRepo:
         self.db.refresh(new_user)
         return new_user
 
-    def list_users(self, skip: int = 0, limit: int = 100) -> List[User]:
+    def list_users(self, skip: int = 0, limit: int = 100) -> List[Product]:
         """
         list of all users retuning User
 
@@ -79,9 +79,9 @@ class UserRepo:
         return:
         - User
         """
-        return self.db.query(User).offset(skip).limit(limit).all()
+        return self.db.query(Product).offset(skip).limit(limit).all()
 
-    def update_user(self, user_id: int, user: User) -> Optional[User]:
+    def update_user(self, user_id: int, user: Product) -> Optional[Product]:
         """
         update an user in database returning User
 

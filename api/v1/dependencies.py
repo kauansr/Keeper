@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from core.db import SessionLocal
 from core.security.jwt import decode_access_token
 from core.security.oauth import oauth2_scheme
-from repository.user_repo import UserRepo
-from models.user import User
+from repository.user_repo import ProductRepo
+from models.user import Product
 
 
 def get_db():
@@ -24,7 +24,7 @@ def get_db():
 
 def get_current_user(
     token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
-) -> User:
+) -> Product:
     """
     Retrieves the current user based on the provided OAuth2 token.
 
@@ -47,7 +47,7 @@ def get_current_user(
 
     user_email = str(payload["sub"])
 
-    userrepo = UserRepo(db)
+    userrepo = ProductRepo(db)
     user = userrepo.get_user_by_email(user_email)
 
     if not user:

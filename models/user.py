@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 from core.db import Base, engine
 
 
-class User(Base):
+class Product(Base):
     """
     User model for sqlalchemy create table
     """

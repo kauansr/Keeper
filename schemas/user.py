@@ -2,7 +2,7 @@ from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 
 
-class UserCreate(BaseModel):
+class ProductCreate(BaseModel):
     name: str = Field(min_length=3, max_length=50)
     email: str
     password: str = Field(min_length=8)
@@ -20,7 +20,7 @@ class UserResponse(BaseModel):
     created_at: datetime
 
 
-class UserUpdate(BaseModel):
+class ProductUpdate(BaseModel):
     name: str
     email: str
     password: str
