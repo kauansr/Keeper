@@ -20,6 +20,9 @@ class Settings(BaseSettings):
     # Database config
     DATABASE_URL: str
 
+    # Database for tests
+    DATABASE_URL_TEST: str
+
     # JWT config
     SECRET_KEY: str
     ALGORITHM: str = "HS256"

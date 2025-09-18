@@ -7,6 +7,7 @@ This is a project to help people shop by allowing them to enter the product name
 - **React.js**: Front-end framework used to build the user interface.
 - **PostgreSQL**: Database used to protect and keep all data.
 - **Sqlalchemy**: A python SQL toolkit ORM.
+- **Pytest**: A framework for testing application.
 - **Celery**: A system to process vast amount of messages.
 - **Uvicorn**: An ASGI web server for python.
 
@@ -30,7 +31,7 @@ Follow the steps below to set up the project.
 
     pip install -r requirements.txt
 
-    uvicorn main:app --reload
+    python main.py
     ```
 
 3. Frontend (Reactjs)

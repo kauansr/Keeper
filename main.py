@@ -11,9 +11,7 @@ app = FastAPI(debug=settings.DEBUG)
 
 @app.get("/")
 def read_item():
-    return {
-        "OrcaHelper": "Ajuda a voce ver o que pode comprar da sua lista de desejos e te alerta caso a data do produto esteja perto de expirar"
-    }
+    return {"Keeper": "A shopping helper"}
 
 
 app.middleware("http")(add_user_to_request_state)
