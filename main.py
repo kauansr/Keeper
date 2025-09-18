@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from core.config import get_settings
 from api.v1.routes.user_route import user_route
+from api.v1.routes.product_route import product_route
 from middlewares.middleware import add_user_to_request_state
 import uvicorn
 
@@ -17,6 +18,7 @@ def read_item():
 app.middleware("http")(add_user_to_request_state)
 
 app.include_router(user_route, tags=["/user"])
+app.include_router(product_route, tags=["/product"])
 
 
 if __name__ == "__main__":

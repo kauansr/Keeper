@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
-from schemas.user import ProductCreate, UserLogin, UserResponse, ProductUpdate
+from schemas.user import UserCreate, UserLogin, UserResponse, UserUpdate
 from services.user_service import UserService
 from api.v1.dependencies import get_db, get_current_user
 from sqlalchemy.orm import Session
 from core.security.jwt import create_access_token
 from core.security.hashing import verify_password
-from models.user import Product
+
 
 user_route = APIRouter()
 
@@ -46,7 +46,7 @@ async def get_users(user_service: UserService = Depends(get_user_service)):
 
 @user_route.post("/user", response_model=UserResponse)
 async def create_user(
-    body: ProductCreate, user_service: UserService = Depends(get_user_service)
+    body: UserCreate, user_service: UserService = Depends(get_user_service)
 ):
     """
     Create a new user.
@@ -74,7 +74,7 @@ async def create_user(
 @user_route.put("/user/update/{user_id}", response_model=UserResponse)
 async def update_user(
     user_id: int,
-    user_data: ProductUpdate,
+    user_data: UserUpdate,
     user_service: UserService = Depends(get_user_service),
 ):
     """

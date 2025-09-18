@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models.product import Product
-from schemas.user import ProductCreate, ProductUpdate
-from core.security.hashing import hash_password
+from schemas.product import ProductCreate, ProductUpdate
 from typing import Optional, List
 
 
@@ -37,7 +36,7 @@ class ProductRepo:
         """
         return self.db.query(Product).filter(Product.name == name).first()
 
-    def create_product(self, product_data: Product) -> Product:
+    def create_product(self, product_data: ProductCreate) -> Product:
         """
         Create a product and return the Product
 
@@ -47,7 +46,12 @@ class ProductRepo:
         return:
         - Product
         """
-        new_product = product_data
+        new_product = Product(
+            name=product_data.name,
+            fk_user=product_data.fk_user,
+            date_expire=product_data.date_expire,
+            price=product_data.price,
+        )
         self.db.add(new_product)
         self.db.commit()
         self.db.refresh(new_product)

@@ -1,9 +1,10 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql import func
 from core.db import Base, engine
+from sqlalchemy.orm import relationship
 
 
-class Product(Base):
+class User(Base):
     """
     User model for sqlalchemy create table
     """
@@ -15,6 +16,7 @@ class Product(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    products = relationship("Product", back_populates="user")
 
 
 Base.metadata.create_all(bind=engine)
