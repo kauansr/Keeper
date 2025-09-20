@@ -18,7 +18,7 @@ Follow the steps below to set up the project.
 
 1. Clone the repository:
     ```bash
-    git clone 
+    git clone https://github.com/kauansr/Keeper.git
 
     cd keeper
     ```

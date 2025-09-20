@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from models.user import User
-from schemas.user import ProductCreate, ProductUpdate
+from schemas.user import UserCreate, UserUpdate
 from repository.user_repo import UserRepo
 from typing import List, Optional
 from core.security.hashing import hash_password
@@ -45,7 +45,7 @@ class UserService:
 
         return self.user_repo.get_user_by_username(username)
 
-    def create_user(self, user_data: ProductCreate) -> User:
+    def create_user(self, user_data: UserCreate) -> User:
 
         existing_user = self.user_repo.get_user_by_email(user_data.email)
         if existing_user:
@@ -53,7 +53,7 @@ class UserService:
 
         return self.user_repo.create_user(user_data)
 
-    def update_user(self, user_id: int, user_data: ProductUpdate) -> User:
+    def update_user(self, user_id: int, user_data: UserUpdate) -> User:
 
         user = self.get_user_by_id(user_id)
 

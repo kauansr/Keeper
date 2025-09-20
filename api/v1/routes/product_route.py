@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
-from schemas.product import ProductResponse, ProductCreate
+from schemas.product import ProductResponse, ProductCreate, ProductUpdate
 from services.product_service import ProductService
 from api.v1.dependencies import get_db, get_current_user
 from sqlalchemy.orm import Session
+from fastapi.responses import JSONResponse
 
 product_route = APIRouter()
 
@@ -65,3 +66,64 @@ async def create_product(
     if not product_created:
         HTTPException(status_code=400, detail="Invalid credentials!")
     return product_created
+
+
+@product_route.put("/product/update/{product_id}", response_model=ProductResponse)
+async def update_product(
+    product_id: int,
+    product_data: ProductUpdate,
+    product_service: ProductService = Depends(get_product_service),
+):
+    """
+    Update an existing product.
+
+    This endpoint updates an existing product's data based on the provided product ID and new product data.
+
+    Parameters:
+    - product_id (int): The ID of the product to be updated.
+    - product_data (ProductUpdate): The new data for the product.
+    - product_service (ProductService): Dependency that provides the productservice instance used to update the product.
+
+    Responses:
+    - 200 OK: The updated product information in the `ProductResponse` format.
+    - 400 Bad Request: If the update operation fails, a `400` status is returned with the message "Update error!".
+
+    Example usage:
+    - Request: PUT /product/update/{product_id} with updated product data.
+    - Response: Updated product or 400 if the update fails.
+    """
+
+    update_product = product_service.update_product(product_id, product_data)
+
+    if not update_product:
+        HTTPException(status_code=400, detail="Update error!")
+
+    return update_product
+
+
+@product_route.delete("/product/{id_product}")
+async def delete_user(
+    id_product: int, product_service: ProductService = Depends(get_product_service)
+):
+    """
+    Delete a product by ID.
+
+    This endpoint deletes the product identified by the given product ID.
+
+    Parameters:
+    - id_product (int): The ID of the product to be deleted.
+    - product_service (ProductService): Dependency that provides the product service instance to perform deletion.
+
+    Responses:
+    - 200 OK: Returns a success message when the product is deleted.
+    - 400 Bad Request: If the product deletion fails, a `400` status is returned with the message "product not deleted!".
+
+    Example usage:
+    - Request: DELETE /product/{id_product}
+    - Response: Confirmation message or 400 if deletion fails.
+    """
+    delete_service = product_service.delete_product(id_product)
+
+    if not delete_service:
+        HTTPException(status_code=400, detail="product not deleted!")
+    return JSONResponse(content={"message": "Deleted successefuly!"}, status_code=200)
